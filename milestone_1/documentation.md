@@ -2,14 +2,19 @@
 ## Projekt – milestone 1
 
 ### Projektidee:
-Als Idee soll ein in Realität umsetzbares interkantonales Schulprojekt umgesetzt werden, bei welchem Schülerinnen und Schüler wie auch Lehrpersonen gemeinsam versuchen, in möglichst kurzer Zeit mit verschiedenen sportlichen Aktivitäten eine Distanz von 42'000 km zu erreichen. Mit dem Projekt «Einmal um die Erde» sollen die Teilnehmenden nicht nur dazu angeregt werden, sich sportlich zu betätigen und somit etwas Gutes für sich wie auch die Umwelt zu tun, nebenbei wird durch die interkantonale Herausforderung auch der Teamgeist der Teilnehmenden gefördert.
-Das Projekt "Einmal um die Erde" wird auf einer Webplattform aufbereitet und darüber geregelt. Die Teilnehmenden können sich über die Webplattform registrieren, ihre erbrachten Leistungen über bestimmte Apps anrechnen lassen und jederzeit den aktuellen Stand abrufen. Um dieses Projekt umsetzen zu können, braucht es unter anderem eine Datenbank, die im Rahmen dieses Projekts der Vorlesung "Datenbanken" (zumindest theoretisch) realisiert werden soll. 
+Als Idee soll ein in Realität umsetzbares interkantonales Schulprojekt umgesetzt werden, bei welchem Schüler:innen wie auch Lehrpersonen gemeinsam versuchen, in möglichst kurzer Zeit mit verschiedenen sportlichen Aktivitäten eine Distanz von 42'000 km zu erreichen. Mit dem Projekt «Einmal um die Erde» sollen die Teilnehmenden nicht nur dazu angeregt werden, sich sportlich zu betätigen und somit etwas Gutes für sich wie auch die Umwelt zu tun, nebenbei wird durch die interkantonale Herausforderung auch der Teamgeist der Teilnehmenden gefördert.
+Das Projekt "Einmal um die Erde" wird auf einer Webplattform aufbereitet und darüber geregelt. Die zurückgelegten Distanzen der Teilnehmenden (Schüler: innen) werden gesammelt,
+kontrolliert, und in einen Datensatz eingetragen (controlling durch tracking resp. durch
+eine Gruppe von Kontrollpersonen). Die Etappen werden auf einem Globus visualisiert. 
 
-Ziel: Leistung in km messen und als Schule die 42'000 km (Erdumfang) erreichen.
-Schule als ganzes erfassen? 
-einzelne Klassen erfassen? 
-LPs separat erfassen? 
-Welche Sportarten zulässig? 
+Es entsteht ein virtuelles Wettrennen
+um die Welt. Starpunkt ist Standort der Schule. Der aktuelle Standort wird jeweils visuell auf
+dem Globus dargestellt. Die zurückgelegte Distanz und die entsprechenden Disziplinen wie Laufen, Rad fahren, Schwimmen etc. wird
+angegeben. Denkbar sind Angaben der Kalorien, gesparten CO2 Reduktion, gesparten
+Gesundheitskosten et.
+
+Um dieses Projekt umsetzen zu können, braucht es unter anderem eine Datenbank, die im Rahmen dieses Projekts der Vorlesung "Datenbanken" (zumindest theoretisch) realisiert werden soll. 
+
 
 Für die Datenbank haben wir uns folgende mögliche Entities überlegt:
 - Schule 
