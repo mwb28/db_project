@@ -2,20 +2,22 @@
 ## Projekt – milestone 1
 
 ### Projektidee:
-Interkantonales Projekt «Mit sportlicher Aktivität um die Erde»
+Als Idee soll ein in Realität umsetzbares interkantonales Schulprojekt umgesetzt werden, bei welchem Schülerinnen und Schüler wie auch Lehrpersonen gemeinsam versuchen, in möglichst kurzer Zeit mit verschiedenen sportlichen Aktivitäten eine Distanz von 42'000 km zu erreichen. Mit dem Projekt «Einmal um die Erde» sollen die Teilnehmenden nicht nur dazu angeregt werden, sich sportlich zu betätigen und somit etwas Gutes für sich wie auch die Umwelt zu tun, nebenbei wird durch die interkantonale Herausforderung auch der Teamgeist der Teilnehmenden gefördert.
+Das Projekt "Einmal um die Erde" wird auf einer Webplattform aufbereitet und darüber geregelt. Die Teilnehmenden können sich über die Webplattform registrieren, ihre erbrachten Leistungen über bestimmte Apps anrechnen lassen und jederzeit den aktuellen Stand abrufen. Um dieses Projekt umsetzen zu können, braucht es unter anderem eine Datenbank, die im Rahmen dieses Projekts der Vorlesung "Datenbanken" (zumindest theoretisch) realisiert werden soll. 
+
 Ziel: Leistung in km messen und als Schule die 42'000 km (Erdumfang) erreichen.
 Schule als ganzes erfassen? 
 einzelne Klassen erfassen? 
 LPs separat erfassen? 
 Welche Sportarten zulässig? 
 
-Mögliche Entities:
+Für die Datenbank haben wir uns folgende mögliche Entities überlegt:
 - Schule 
 - Lehrperson
-- Sportlehrperson
+- Sportlehrperson (separat?)
 - Schüler:in
 - Klasse
-- Kanton
+- Kanton (als Attribut bei der Schule?)
 - Plattform
 
 
