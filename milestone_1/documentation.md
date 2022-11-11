@@ -17,7 +17,8 @@ Für die Datenbank haben wir uns folgende mögliche Entitäten überlegt:
 --> Braucht es eine Beziehung zw. Webplattform und Sportliche Leistung? 
 
 
-### Sample Queries (ausformuliert):
+### Sample Queries (ausformuliert)
+
 1.	Wie viele km hat die Schule XY zum Zeitpunkt X/bisher/Stand der Abfrage erreicht? 
 2.	Wie viele km hat die Klasse XY zum Zeitpunkt X/bisher/Stand der Abfrage erreicht? 
 3.	Mit welcher Sportart wurde die grösste Distanz zurückgelegt? 
@@ -32,6 +33,8 @@ Für die Datenbank haben wir uns folgende mögliche Entitäten überlegt:
 12.	Wie viele Kilometer wurden insgesamt im Projekt erreicht? 
 13.	Welche Schule/Klasse hat in kürzester Zeit die Erde umrundet? 
 
+### ER Diagramm
 
+![ER Diagramm](./diagramdraft2.png)
 
 
