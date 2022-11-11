@@ -1,7 +1,7 @@
 # Datenbanken HS22
 ## Projekt – milestone 1
 
-### Projektidee:
+### Projektidee
 Als Idee soll ein in Realität umsetzbares interkantonales Schulprojekt umgesetzt werden, bei welchem Schüler:innen wie auch Lehrpersonen gemeinsam versuchen, in möglichst kurzer Zeit mit verschiedenen sportlichen Aktivitäten eine Distanz von 42'000 km zu erreichen. Mit dem Projekt «Einmal um die Erde» sollen die Teilnehmenden nicht nur dazu angeregt werden, sich sportlich zu betätigen und somit etwas Gutes für sich wie auch die Umwelt zu tun, nebenbei wird durch die interkantonale Herausforderung auch der Teamgeist der Teilnehmenden gefördert.
 Das Projekt "Einmal um die Erde" wird auf einer Webplattform aufbereitet und darüber geregelt. Die zurückgelegten Distanzen der Teilnehmenden (Schüler:innen) werden durch die Sportlehrperson gesammelt, kontrolliert und über die Webplattform in die Datenbank übermittelt. Die Etappen werden auf einem Globus visualisiert. Es entsteht ein virtuelles Wettrennen um die Welt. Als Startpunkt gilt der jeweilige Standort der Schule. Der aktuelle Standort wird stets visuell auf dem Globus dargestellt. Die zurückgelegte Distanz und die entsprechenden Disziplinen wie Laufen, Rad fahren, Schwimmen etc. werden angegeben. Denkbar sind Angaben der verbrauchten Kalorien, gesparten CO2-Emissionen und Gesundheitskosten und vieles mehr. 
 
