@@ -19,8 +19,8 @@ Für die Datenbank haben wir uns folgende mögliche Entitäten überlegt:
 
 ### Sample Queries (ausformuliert)
 
-1.	Wie viele km hat die Schule XY zum Zeitpunkt X/bisher/Stand der Abfrage erreicht? 
-2.	Wie viele km hat die Klasse XY zum Zeitpunkt X/bisher/Stand der Abfrage erreicht? 
+1.	Wie viele Kilometer hat die Schule XY zum Zeitpunkt X/bisher/Stand der Abfrage erreicht? 
+2.	Wie viele Kilometer hat die Klasse XY zum Zeitpunkt X/bisher/Stand der Abfrage erreicht? 
 3.	Mit welcher Sportart wurde die grösste Distanz zurückgelegt? 
 4.	Wie viele Schulen pro Kanton nehmen am Projekt teil? 
 5.	Wie viele Klassen pro Schule nehmen am Projekt teil? 
