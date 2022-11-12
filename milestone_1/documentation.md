@@ -35,6 +35,6 @@ Für die Datenbank haben wir uns folgende mögliche Entitäten überlegt:
 
 ### ER Diagramm
 
-![ER Diagramm](./diagramdraft2.png)
+![ER Diagramm](./ER-umdieErde.png)
 
 
