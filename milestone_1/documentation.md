@@ -14,7 +14,6 @@ Für die Datenbank haben wir uns folgende mögliche Entitäten überlegt:
 - Klasse (schwache Entität)
 - Web-Plattform
 
---> Braucht es eine Beziehung zw. Webplattform und Sportliche Leistung? 
 
 
 ### Sample Queries (ausformuliert)
