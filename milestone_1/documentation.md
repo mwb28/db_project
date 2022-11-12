@@ -12,7 +12,8 @@ Für die Datenbank haben wir uns folgende mögliche Entitäten überlegt:
 - Sportlehrperson
 - Schüler:in
 - Klasse (schwache Entität)
-- Web-Plattform
+- Sportliche Leistung
+- Zeit
 
 
 
