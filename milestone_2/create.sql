@@ -1,13 +1,13 @@
 create table schule(
   schul_nr integer not null unique primary key,
-  name varchar(80) not null, 
-  kanton varchar(80) not null
+  name varchar(40) not null, 
+  kanton varchar(30) not null
   );
 
 create table schueler(
   schueler_nr integer not null unique primary key, 
-  nachname varchar(80) not null, 
-  vorname varchar(80) not null, 
+  nachname varchar(30) not null, 
+  vorname varchar(30) not null, 
   jahrgang integer not null, 
   geschlecht varchar(20) not null,
   foreign key (name)
@@ -16,15 +16,15 @@ create table schueler(
 create table sportliche_leistung(
   count_no integer not null unique primary key, 
   km integer, 
-  sportart varchar(80), 
+  sportart varchar(30), 
   co2_aquivalenz integer
   foreign key (name)
   );
   
 create table sportlehrperson(
   pers_no integer not null unique primary key, 
-  nachname varchar(80), 
-  vorname varchar(80)
+  nachname varchar(30), 
+  vorname varchar(30)
   foreign key (schul_nr)
   );
   
@@ -35,7 +35,7 @@ create table zeit(
   );
   
 create table klasse(
-  name varchar(80) not null primary key
+  name varchar(30) not null primary key
   );
   
 create table erbringt(
