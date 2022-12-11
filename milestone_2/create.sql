@@ -35,15 +35,18 @@ create table zeit(
   );
   
 create table klasse(
-  name varchar(30) not null primary key
+  name varchar(30) not null primary key,
+  foreign key (schul_nr, pers_no)
   );
   
 create table erbringt(
-  primary key, foreign key1(schueler_nr)
-  primary key, foreign key2(count_no)
+  schueler_nr integer, 
+  count_no integer, 
+  primary key(schueler_nr, count_no)
   );
 
 create table erfolgt(
-  primary key, foreign key1(log_no)
-  primary key, foreign key2(count_no)
+  log_no integer,
+  count_no integer,
+  primary key(log_no, count_no)
   );
