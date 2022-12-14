@@ -82,7 +82,7 @@ create table sportliche_leistung(
   check (km > 0),
   sportart varchar(30) not null, 
   co2_aquivalenz integer
-  check (co2_aquivalenz >= 0) default 0,
+  check (co2_aquivalenz >=0) default 0,
   zeit_log_no integer ,
   foreign key (zeit_log_no)
   references zeit(log_no) on delete cascade
@@ -92,7 +92,8 @@ create table sportliche_leistung(
 Die Tabelle sportliche_leistung enthält die Attribute count_no, km, sportart, co2_aquivalenz und zeit_log_no.
 Die count_no ist die Primärschlüssel und wird automatisch hochgezählt.
 Die km, sportart sind nicht null und müssen angegeben werden. 
-Die co2_aquivalenz muss nicht angegeben werden, da sie ev. nicht immer bekannt ist.
+Die co2_aquivalenz muss nicht angegeben werden, da sie ev. nicht immer bekannt ist. Diese wird dann auf 0 gesetzt.
+Wenn die co2_aquivalenz angegeben wird, wird geprüft, ob der eingegebene Wert grösser oder gleich 0 ist.
 Die zeit_log_no ist ein Fremdschlüssel, welcher auf die Tabelle zeit verweist.
 zeit_log_no soll gelöscht werden, falls die Zeit gelöscht wird, da wir annehmen, dass die Zeit nur einmal
 für eine sportliche Leistung verwendet wird.
@@ -128,6 +129,7 @@ Die log_no ist die Primärschlüssel und wird automatisch hochgezählt.
 Die datum und uhrzeit sind nicht null und müssen angegeben werden.
 Bei datum wird geprüft, ob der eingegebene Wert nach dem 01.01.2023 liegt. Wir nehmen an, dass die Datenbank erst
 ab dem 01.01.2023 verwendet wird.
+Falls datum und uhrzeit nicht angegeben werden, werden diese auf 01.01.2023 und 12:00:00 gesetzt.
 Bei uhrzeit wird geprüft, ob der eingegebene Wert zwischen 00:00:00 und 23:59:59 liegt.
 
   */
