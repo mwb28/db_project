@@ -48,8 +48,8 @@ create table schule(
   ); 
 /*
 Die Tabelle schule enthält die Attribute schul_nr, schulname und kanton.
-Die schul_nr ist der Primärschlüssel und wird automatisch hochgezählt.
-Die schulname und kanton sind nicht null und müssen angegeben werden.
+Das Attribut schul_nr ist der Primärschlüssel und wird automatisch hochgezählt.
+Die Attribute schulname und kanton sind nicht null und müssen angegeben werden.
 Bei kanton wird geprüft, ob der eingegebene Wert in der Liste der Kantone enthalten ist.
 Hier hätte man auch eine Tabelle mit allen Kantonen erstellen können, und mit einem foreign key verknüpfen können.
 Wir haben uns aber für diese Lösung entschieden, da wir nur die Kantone benötigen, 
@@ -70,7 +70,7 @@ create table schueler(
   /*
 Die Tabelle schueler enthält die Attribute schueler_nr, nachname, vorname, Geburtsjahr, geschlecht und klassen_name.
 Die schueler_nr ist der Primärschlüssel und wird automatisch hochgezählt.
-Die nachname, vorname, Geburtsjahr, geschlecht und klassen_name sind nicht null und müssen angegeben werden.
+Die Attribute nachname, vorname, Geburtsjahr, geschlecht und klassen_name sind nicht null und müssen angegeben werden.
 Bei geburtsjahr wird geprüft, ob der eingegebene Wert zwischen 2000 und 2010 liegt. Hier nehmen wir an, 
 dass die Schüler zwischen 12 und 22 Jahre alt sind. Dies könnte man natürlich auch noch anpassen.
 Bei geschlecht wird geprüft ob der eingegebene Wert m, w oder d ist. d steht für divers.
@@ -98,7 +98,7 @@ Die count_no ist der Primärschlüssel und wird automatisch hochgezählt.
 Die Attribute km und sportart sind nicht null und müssen angegeben werden. 
 Die co2_aquivalenz muss nicht angegeben werden, da sie ev. nicht immer bekannt ist. Diese wird dann auf 0 gesetzt.
 Wenn die co2_aquivalenz angegeben wird, wird geprüft, ob der eingegebene Wert grösser oder gleich 0 ist.
-Die zeit_log_no ist ein Fremdschlüssel, welcher auf die Tabelle zeit verweist.
+Das Attribut zeit_log_no ist ein Fremdschlüssel, welcher auf die Tabelle zeit verweist.
 zeit_log_no soll gelöscht werden, falls die Zeit gelöscht wird, da wir annehmen, dass die Zeit nur einmal
 für eine sportliche Leistung verwendet wird.
   */
@@ -114,7 +114,7 @@ create table sportlehrperson(
   /*
 Die Tabelle sportlehrperson enthält die Attribute pers_no, nachname, vorname und schul_nr.
 Die pers_no ist der Primärschlüssel und wird automatisch hochgezählt.
-Die nachname, vorname und schul_nr sind nicht null und müssen angegeben werden.
+Die Attribute nachname, vorname und schul_nr sind nicht null und müssen angegeben werden.
 Das Attribut schul_nr ist ein Fremdschlüssel, welcher auf die Tabelle schule verweist.
 schul_nr soll auf null gesetzt werden, falls die Schule gelöscht wird, da wir erwarten, dass die Lehrperson immer 
 in einer Schule arbeitet. Falls die Lehrperson in eine andere Schule wechselt, 
@@ -129,7 +129,7 @@ create table erfolgt_um(
   );
   /*
 Die Tabelle erfolgt_um enthält die Attribute log_no, datum und uhrzeit.
-Die log_no ist der Primärschlüssel und wird automatisch hochgezählt.
+Das Attribut log_no ist der Primärschlüssel und wird automatisch hochgezählt.
 Die Attribute datum und uhrzeit sind nicht null und müssen angegeben werden.
 Bei datum wird geprüft, ob der eingegebene Wert nach dem 01.01.2023 liegt. Wir nehmen an, dass die Datenbank erst
 ab dem 01.01.2023 verwendet wird.
@@ -148,7 +148,7 @@ create table sportklasse(
   );
   /*
 Die Tabelle klasse enthält die Attribute name und sport_gehalten_von.
-Die name ist der Primärschlüssel und wird automatisch hochgezählt.
+Das Attribut name ist der Primärschlüssel und wird automatisch hochgezählt.
 Hier nehmen wir an, dass jede Klasse ihren eigenen Namen hat. 
 Ob die Klassen in der ganzen Schweiz eindeutig sind, ist uns nicht bekannt, 
 wir nehmen an, dass dies der Fall ist. Sonst würden wir hier einen Sorogatschlüssel verwenden.
