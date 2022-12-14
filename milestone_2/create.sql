@@ -138,6 +138,7 @@ create table sportklasse(
   name varchar(30) not null primary key,
   sport_gehalten_von integer references sportlehrperson(pers_no) on update cascade on delete set null,
   schul_nr integer not null references schule(schul_nr),
+  pers_no integer not null references sportlehrperson(pers_no),
   foreign key (schul_nr, pers_no)
   references sportlehrperson(schul_nr, pers_no) on delete set null on update cascade
   );
@@ -157,8 +158,9 @@ Der Fremdschlüssel ist ein composite key, welcher aus schul_nr und pers_no best
 Es kann sein, dass der Syntax nicht korrekt ist, da wir uns nicht sicher sind,
 ob bei einem composite key die beiden Attribute so geschrieben werden müssen.
 Ev. könnte man hier das Attribut sport_gehalten_von verwenden, da es ja den gleichen Wert hat.
-Wir haben es leider nicht herausgefunden, es ist aber sicher eine reundante Information.
+Wir haben es leider nicht herausgefunden, es ist aber sicher eine redundante Information.
   */
+
 
 
   
