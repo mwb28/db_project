@@ -19,14 +19,36 @@ Weiter haben wir die Beziehung zwischen Klasse und Sportliche Leistung entfernt,
 Zudem haben wir die Beziehung erfolgt mit einer N:1 Beziehung ersetzt, damit nicht mehrere Zeiten für eine Sportliche Leistung angegeben werden können.
 */
 
-*/
 create table schule(
   schul_nr integer not null unique primary key,
   schulname varchar(40) not null, 
   kanton varchar(30) not null
-  );
+  check (kanton = 'AG' or kanton = 'AI' or 
+          kanton = 'AR' or kanton = 'BE' or 
+          kanton = 'BL' or kanton = 'BS' or 
+          kanton = 'FR' or kanton = 'GE' or 
+          kanton = 'GL' or kanton = 'GR' or 
+          kanton = 'JU' or kanton = 'LU' or 
+          kanton = 'NE' or kanton = 'NW' or 
+          kanton = 'OW' or kanton = 'SG' or 
+          kanton = 'SH' or kanton = 'SO' or 
+          kanton = 'SZ' or kanton = 'TG' or 
+          kanton = 'TI' or kanton = 'UR' or 
+          kanton = 'VD' or kanton = 'VS' or 
+          kanton = 'ZG' or kanton = 'ZH'
+  ); 
 
-
+/*
+Die Tabelle schule enthält die Attribute schul_nr, schulname und kanton.
+Die schul_nr ist die Primärschlüssel und wird automatisch hochgezählt.
+Die schulname und kanton sind nicht null und müssen angegeben werden.
+Bei kanton wird geprüft, ob der eingegebene Wert in der Liste der Kantone enthalten ist.
+Hier hätte man auch eine Tabelle mit allen Kantonen erstellen können, und mit einem foreign key verknüpfen können.
+Wir haben uns aber für diese Lösung entschieden, da wir nur die Kantone benötigen, 
+und nicht die ganzen Daten der Kantone.
+*/
+Wir 
+*/
 create table schueler(
   schueler_nr integer not null unique primary key, 
   nachname varchar(30) not null, 
@@ -39,6 +61,7 @@ create table schueler(
   foreign key (klassen_name)
   references klasse(name)
   );
+
   
 create table sportliche_leistung(
   count_no integer not null unique primary key, 
