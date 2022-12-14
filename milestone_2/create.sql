@@ -78,9 +78,11 @@ würde der Schüler dann in eine andere Klasse wechseln, dh. der Schüler sollte
   
 create table sportliche_leistung(
   count_no integer not null unique primary key, 
-  km integer not null,
+  km integer not null
+  check (km > 0),
   sportart varchar(30) not null, 
-  co2_aquivalenz integer,
+  co2_aquivalenz integer
+  check (co2_aquivalenz >= 0) default 0,
   zeit_log_no integer ,
   foreign key (zeit_log_no)
   references zeit(log_no) on delete cascade
@@ -115,9 +117,9 @@ in einer Schule arbeitet. Falls die Lehrperson in eine andere Schule wechselt,
   */
 create table erfolgt_um(
   log_no integer not null unique primary key, 
-  datum date not null
+  datum date not null default '2023-01-01'
   check (datum > '2023-01-01'), 
-  uhrzeit time not null
+  uhrzeit time not null default '12:00:00'
   check (uhrzeit > '00:00:00' and uhrzeit < '23:59:59')
   );
   /*
