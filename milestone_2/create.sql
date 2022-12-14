@@ -27,7 +27,7 @@ Zu jeder Tabelle wird unterhalb der sql Anweisung ein kurzer Kommentar gegeben.
 create table schule(
   schul_nr integer not null unique primary key,
   schulname varchar(40) not null, 
-  kanton varchar(30) not null
+  kanton varchar(2) not null
   check (kanton = 'AG' or kanton = 'AI' or 
           kanton = 'AR' or kanton = 'BE' or 
           kanton = 'BL' or kanton = 'BS' or 
