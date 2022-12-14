@@ -10,7 +10,7 @@ Die Tabellen sind:
 2. schueler
 3. sportliche_leistung
 4. sportlehrperson
-5. erfolgt (hier werden die Zeiten gespeichert, wann die Sportliche Leistung stattgefunden haben)
+5. erfolgt_um (hier werden die Zeiten gespeichert, wann die Sportliche Leistung stattgefunden haben)
 6. sportklasse
 7. erbringt (hier werden die Beziehungen zwischen den Tabellen schueler und sportliche_leistung gespeichert)
 
@@ -113,7 +113,7 @@ schul_nr soll auf null gesetzt werden, falls die Schule gelöscht wird, da wir e
 in einer Schule arbeitet. Falls die Lehrperson in eine andere Schule wechselt, 
 +soll der Wert von schul_nr geändert werden.
   */
-create table erfolgt(
+create table erfolgt_um(
   log_no integer not null unique primary key, 
   datum date not null
   check (datum > '2023-01-01'), 
@@ -121,7 +121,7 @@ create table erfolgt(
   check (uhrzeit > '00:00:00' and uhrzeit < '23:59:59')
   );
   /*
-Die Tabelle erfolgt enthält die Attribute log_no, datum und uhrzeit.
+Die Tabelle erfolgt_um enthält die Attribute log_no, datum und uhrzeit.
 Die log_no ist die Primärschlüssel und wird automatisch hochgezählt.
 Die datum und uhrzeit sind nicht null und müssen angegeben werden.
 Bei datum wird geprüft, ob der eingegebene Wert nach dem 01.01.2023 liegt. Wir nehmen an, dass die Datenbank erst
@@ -132,7 +132,9 @@ Bei uhrzeit wird geprüft, ob der eingegebene Wert zwischen 00:00:00 und 23:59:5
   
 create table sportklasse(
   name varchar(30) not null primary key,
-  sport_gehalten_von integer references sportlehrperson(pers_no) on update cascade on delete set null
+  sport_gehalten_von integer references sportlehrperson(pers_no) on update cascade on delete set null,
+  schul_nr integer not null references schule(schul_nr),
+  pers_no integer not null references sportlehrperson(pers_no),
   foreign key (schul_nr, pers_no)
   references sportlehrperson(schul_nr, pers_no) on delete set null on update cascade
   );
@@ -148,7 +150,9 @@ Die sport_gehalten_von ist ein Fremdschlüssel, welcher auf die Tabelle sportleh
 sport_gehalten_von soll auf null gesetzt werden, falls die Lehrperson gelöscht wird, da wir erwarten, dass die Klasse immer
 von einer Lehrperson betreut wird. Falls die Lehrperson in eine andere Klasse wechselt,
 soll der Wert von sport_gehalten_von geändert werden.
-
+Der Fremdschlüssel ist ein composite key, welcher aus schul_nr und pers_no besteht.
+Es kann sein, dass der Syntax nicht korrekt ist, da wir uns nicht sicher sind,
+ob bei einem composite key die beiden Attribute so geschrieben werden müssen.
   */
 
 
