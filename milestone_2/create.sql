@@ -1,6 +1,9 @@
 /*
 Zur Erstellung der Datenbank:
 Wir haben uns entschieden, dass wir die Datenbank in 7 Tabellen aufteilen.
+Zur besseren Lesbarkeit von Personenbezeichnungen und personenbezogenen Wörtern 
+wird die männliche Form genutzt. Diese Begriffe gelten für alle Geschlechter.
+
 Die Tabellen sind:
 
 1. schule
@@ -11,7 +14,7 @@ Die Tabellen sind:
 6. sportklasse
 7. erbringt (hier werden die Beziehungen zwischen den Tabellen schueler und sportliche_leistung gespeichert)
 
-Die Rückmeldungen des ersten Milestones haben wir berücksichtigt und die Entitäten bzw. Attribute foglendermassen angepasst:
+Die Rückmeldungen des ersten Milestonegit  haben wir berücksichtigt und die Entitäten bzw. Attribute foglendermassen angepasst:
 Damit zwischen Schule, Sportlehrperson und Klasse keine Connection Trap ensteht, haben wir der Klasse ein zusätzliches Attribut "sport_gehalten_von" hinzugefügt,
 welches auf die Tabelle sportlehrperson verweist. Hier könnte man natürlich auch eine zusätzlich Tabelle erstellen, welche alle 
 Fächer der Klasse aufliestet, da wir aber nur am Fach Sport interessiert sind, haben wir uns für diese Lösung entschieden.
@@ -149,7 +152,7 @@ soll der Wert von sport_gehalten_von geändert werden.
 
   */
 
-  */
+
   
 create table erbringt(
   schueler_nr integer references schueler(schueler_nr) on delete set null,
