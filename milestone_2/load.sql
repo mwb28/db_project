@@ -1,5 +1,5 @@
 /*
-Hier werden exepmplarisch Daten in die Datenbank geladen.
+Hier werden exemplarisch Daten in die Datenbank geladen.
 */
 -- Einfügen der Daten in die Tabelle schule
 
