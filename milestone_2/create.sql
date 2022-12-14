@@ -17,6 +17,8 @@ welches auf die Tabelle sportlehrperson verweist. Hier könnte man natürlich au
 Fächer der Klasse aufliestet, da wir aber nur am Fach Sport interessiert sind, haben wir uns für diese Lösung entschieden.
 Weiter haben wir die Beziehung zwischen Klasse und Sportliche Leistung entfernt, da diese nicht notwendig ist.
 Zudem haben wir die Beziehung erfolgt mit einer N:1 Beziehung ersetzt, damit nicht mehrere Zeiten für eine Sportliche Leistung angegeben werden können.
+
+Zu jeder Tabelle wird unterhalb der sql Anweisung ein kurzer Kommentar gegeben. 
 */
 
 create table schule(
@@ -37,7 +39,6 @@ create table schule(
           kanton = 'VD' or kanton = 'VS' or 
           kanton = 'ZG' or kanton = 'ZH'
   ); 
-
 /*
 Die Tabelle schule enthält die Attribute schul_nr, schulname und kanton.
 Die schul_nr ist die Primärschlüssel und wird automatisch hochgezählt.
@@ -47,8 +48,7 @@ Hier hätte man auch eine Tabelle mit allen Kantonen erstellen können, und mit 
 Wir haben uns aber für diese Lösung entschieden, da wir nur die Kantone benötigen, 
 und nicht die ganzen Daten der Kantone.
 */
-Wir 
-*/
+
 create table schueler(
   schueler_nr integer not null unique primary key, 
   nachname varchar(30) not null, 
@@ -61,7 +61,18 @@ create table schueler(
   foreign key (klassen_name)
   references klasse(name)
   );
-
+  /*
+Die Tabelle schueler enthält die Attribute schueler_nr, nachname, vorname, Geburtsjahr, geschlecht und klassen_name.
+Die schueler_nr ist die Primärschlüssel und wird automatisch hochgezählt.
+Die nachname, vorname, Geburtsjahr, geschlecht und klassen_name sind nicht null und müssen angegeben werden.
+Bei Geburtsjahr wird geprüft, ob der eingegebene Wert zwischen 2000 und 2010 liegt. Hier nehmen wir an, 
+dass die Schüler zwischen 12 und 22 Jahre alt sind. 
+Bei geschlecht wird geprüft ob der eingegebene Wert m, w oder d ist. d steht für divers.
+Die klassen_name ist ein Fremdschlüssel, welcher auf die Tabelle klasse verweist.
+klassen_name soll nur ein update erhalten, falls der Schüler in eine andere Klasse wechselt.
+klassen_name soll auf null gesetzt werden, falls die Klasse gelöscht wird (normalereweise 
+würde der Schüler dann in eine andere Klasse wechseln, dh. der Schüler sollte eigentlich immer in einer Klasse sein.).
+*/ 
   
 create table sportliche_leistung(
   count_no integer not null unique primary key, 
