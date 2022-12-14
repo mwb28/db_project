@@ -8,7 +8,7 @@ Die Tabellen sind:
 3. sportliche_leistung
 4. sportlehrperson
 5. erfolgt (hier werden die Zeiten gespeichert, wann die Sportliche Leistung stattgefunden haben)
-6. klasse
+6. sportklasse
 7. erbringt (hier werden die Beziehungen zwischen den Tabellen schueler und sportliche_leistung gespeichert)
 
 Die Rückmeldungen des ersten Milestones haben wir berücksichtigt und die Entitäten bzw. Attribute foglendermassen angepasst:
@@ -76,42 +76,93 @@ würde der Schüler dann in eine andere Klasse wechseln, dh. der Schüler sollte
   
 create table sportliche_leistung(
   count_no integer not null unique primary key, 
-  km integer,
-  sportart varchar(30), 
+  km integer not null,
+  sportart varchar(30) not null, 
   co2_aquivalenz integer
   zeit_log_no integer on delete cascade,
   foreign key (zeit_log_no)
   references zeit(log_no)
   );
   
+  /*
+Die Tabelle sportliche_leistung enthält die Attribute count_no, km, sportart, co2_aquivalenz und zeit_log_no.
+Die count_no ist die Primärschlüssel und wird automatisch hochgezählt.
+Die km, sportart sind nicht null und müssen angegeben werden. 
+Die co2_aquivalenz muss nicht angegeben werden, da sie ev. nicht immer bekannt ist.
+Die zeit_log_no ist ein Fremdschlüssel, welcher auf die Tabelle zeit verweist.
+zeit_log_no soll gelöscht werden, falls die Zeit gelöscht wird, da wir annehmen, dass die Zeit nur einmal
+für eine sportliche Leistung verwendet wird.
+  */
 create table sportlehrperson(
   pers_no integer not null unique primary key, 
   nachname varchar(30) not null, 
   vorname varchar(30) not null,
-  schul_nr integer not null,
+  schul_nr integer not null on delete set null on update cascade,
   foreign key (schul_nr)
   references schule(schul_nr)
   );
   
+  /*
+Die Tabelle sportlehrperson enthält die Attribute pers_no, nachname, vorname und schul_nr.
+Die pers_no ist die Primärschlüssel und wird automatisch hochgezählt.
+Die nachname, vorname und schul_nr sind nicht null und müssen angegeben werden.
+Die schul_nr ist ein Fremdschlüssel, welcher auf die Tabelle schule verweist.
+schul_nr soll auf null gesetzt werden, falls die Schule gelöscht wird, da wir erwarten, dass die Lehrperson immer 
+in einer Schule arbeitet. Falls die Lehrperson in eine andere Schule wechselt, 
++soll der Wert von schul_nr geändert werden.
+  */
 create table erfolgt(
   log_no integer not null unique primary key, 
-  datum date
+  datum date not null
   check (datum > '2023-01-01'), 
-  uhrzeit time
+  uhrzeit time not null
   check (uhrzeit > '00:00:00' and uhrzeit < '23:59:59')
   );
+  /*
+Die Tabelle erfolgt enthält die Attribute log_no, datum und uhrzeit.
+Die log_no ist die Primärschlüssel und wird automatisch hochgezählt.
+Die datum und uhrzeit sind nicht null und müssen angegeben werden.
+Bei datum wird geprüft, ob der eingegebene Wert nach dem 01.01.2023 liegt. Wir nehmen an, dass die Datenbank erst
+ab dem 01.01.2023 verwendet wird.
+Bei uhrzeit wird geprüft, ob der eingegebene Wert zwischen 00:00:00 und 23:59:59 liegt.
+
+  */
   
-create table klasse(
+create table sportklasse(
   name varchar(30) not null primary key,
   sport_gehalten_von integer references sportlehrperson(pers_no) on update cascade on delete set null
   foreign key (schul_nr, pers_no)
   references sportlehrperson(schul_nr, pers_no)
   );
+  /*
+Die Tabelle klasse enthält die Attribute name und sport_gehalten_von.
+Die name ist die Primärschlüssel und wird automatisch hochgezählt.
+Hier nehmen wir an, dass jede Klasse ihren eigenen Namen hat. 
+Ob die Klassen in der ganzen Schweiz eindeutig sind, ist uns nicht bekannt, 
+wir nehmen an, dass dies der Fall ist. Sonst würden wir hier einen Sorogatschlüssel verwenden.
+Die Sportklassen entsprechen auch nicht den normalen Klassen, d.gh. es kann durchaus sein, dass
+die Sportklassen aus verschiedenen Klassen der Schule zusammengefasst sind.
+Die sport_gehalten_von ist ein Fremdschlüssel, welcher auf die Tabelle sportlehrperson verweist.
+sport_gehalten_von soll auf null gesetzt werden, falls die Lehrperson gelöscht wird, da wir erwarten, dass die Klasse immer
+von einer Lehrperson betreut wird. Falls die Lehrperson in eine andere Klasse wechselt,
+soll der Wert von sport_gehalten_von geändert werden.
+
+  */
+
+  */
   
 create table erbringt(
-  schueler_nr integer, 
-  count_no integer, 
-  primary key(schueler_nr, count_no)
+  schueler_nr integer references schueler(schueler_nr) on delete set null,
+  count_no integer references sportliche_leistung(count_no) on delete set null,
+  primary key(schueler_nr, count_no) 
   );
+  /*
+Die Tabelle erbringt enthält die Attribute schueler_nr und count_no.
+Die schueler_nr und count_no sind die Primärschlüssel und werden automatisch hochgezählt.
+Die schueler_nr wird auf die Tabelle schueler verweisen und soll auf null gesetzt werden, falls der Schüler gelöscht wird.
+Die count_no wird auf die Tabelle sportliche_leistung verweisen und soll auf null gesetzt werden, falls die sportliche Leistung gelöscht wird.
+Es macht keinen Sinn, dass ein Schüler eine sportliche Leistung erbringt, die nicht existiert (oder umgekehrt).
+  */
+
 
 
