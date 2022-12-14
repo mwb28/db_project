@@ -29,9 +29,11 @@ insert into sportliche_leistung values
 (3,15,'walking',20,3),
 (4,20,'radfahren',11,4),
 (5,5,'laufen',30,5),
-
+(6,2,'schwimmen',10,6),
 (7,7,'walking',20,7),
-(8,8,'radfahren',11,8);
+(8,8,'radfahren',11,8),
+(9,9,'laufen',30,9),
+(10,1,'schwimmen',5,10);
 
 -- Einfügen der Daten in der Tabelle sporlehrperson
 insert into sportlehrperson values 
@@ -47,10 +49,29 @@ insert into erfolgt_um values
 (3, '2023-01-12','15:00:00'),
 (4, '2023-01-13','15:45:00'),
 (5, '2023-01-14','16:30:00'),
-(6, '2023-01-15','17:15:00'),
-(7, '2023-01-16','18:00:00'),
-(8, '2023-01-17','18:45:00');
+(6, '2023-01-15','13:15:00'),
+(7, '2023-01-16','16:00:00'),
+(8, '2023-01-17','14:45:00'),
+(9, '2023-01-18','11:30:00'),
+(10, '2023-01-19','10:15:00');
 
 -- Einfügen der Daten in der Tabelle sportklasse 
 insert into sportklasse values 
-('26a',1,(2,1)),
+('26a',1,2,1),
+('27a',2,3,2),
+('24a',3,4,3),
+('25a',4,1,4),
+('23a',1,2,1);
+
+-- Einfügen der Daten in der Tabelle erbringt
+insert into erbringt values 
+(1,1),
+(2,2),
+(3,3),
+(4,4),
+(5,5),
+(6,6),
+(7,7),
+(8,8),
+(9,9),
+(10,10);
