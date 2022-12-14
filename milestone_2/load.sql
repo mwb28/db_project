@@ -26,4 +26,31 @@ insert into schueler values
 insert into sportliche_leistung values 
 (1, 10,'laufen',30,1),
 (2,2,'schwimmen',10,2),
-()
+(3,15,'walking',20,3),
+(4,20,'radfahren',11,4),
+(5,5,'laufen',30,5),
+
+(7,7,'walking',20,7),
+(8,8,'radfahren',11,8);
+
+-- Einfügen der Daten in der Tabelle sporlehrperson
+insert into sportlehrperson values 
+(1, 'Walther', 'Matthias',2),
+(2, 'Ineichen','Calissa',3),
+(3, 'Brunner','Peter',4),
+(4, 'Holzer', 'Hans',1);
+
+-- Einfügen der Daten in der Tabelle erfolgt_um
+insert into erfolgt_um values 
+(1,'2023-01-10','13:30:00'),
+(2, '2023-01-11','14:15:00'),
+(3, '2023-01-12','15:00:00'),
+(4, '2023-01-13','15:45:00'),
+(5, '2023-01-14','16:30:00'),
+(6, '2023-01-15','17:15:00'),
+(7, '2023-01-16','18:00:00'),
+(8, '2023-01-17','18:45:00');
+
+-- Einfügen der Daten in der Tabelle sportklasse 
+insert into sportklasse values 
+('26a',1,(2,1)),
