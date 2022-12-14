@@ -40,7 +40,7 @@ create table schule(
           kanton = 'SZ' or kanton = 'TG' or 
           kanton = 'TI' or kanton = 'UR' or 
           kanton = 'VD' or kanton = 'VS' or 
-          kanton = 'ZG' or kanton = 'ZH'
+          kanton = 'ZG' or kanton = 'ZH'),
   ); 
 /*
 Die Tabelle schule enthält die Attribute schul_nr, schulname und kanton.
@@ -60,9 +60,8 @@ create table schueler(
   check (Geburtsjahr > 2000 and Geburtsjahr < 2010),
   geschlecht varchar(1) not null
   check (geschlecht = 'm' or geschlecht = 'w' or geschlecht = 'd'),
-  klassen_name varchar(30) not null on update cascade on delete set null,
-  foreign key (klassen_name)
-  references klasse(name)
+  klassen_name varchar(30) not null,
+  foreign key (klassen_name) references klasse(name) on update cascade on delete set null,
   );
   /*
 Die Tabelle schueler enthält die Attribute schueler_nr, nachname, vorname, Geburtsjahr, geschlecht und klassen_name.
@@ -81,10 +80,10 @@ create table sportliche_leistung(
   count_no integer not null unique primary key, 
   km integer not null,
   sportart varchar(30) not null, 
-  co2_aquivalenz integer
-  zeit_log_no integer on delete cascade,
+  co2_aquivalenz integer,
+  zeit_log_no integer ,
   foreign key (zeit_log_no)
-  references zeit(log_no)
+  references zeit(log_no) on delete cascade
   );
   
   /*
@@ -100,9 +99,9 @@ create table sportlehrperson(
   pers_no integer not null unique primary key, 
   nachname varchar(30) not null, 
   vorname varchar(30) not null,
-  schul_nr integer not null on delete set null on update cascade,
+  schul_nr integer not null ,
   foreign key (schul_nr)
-  references schule(schul_nr)
+  references schule(schul_nr)on delete set null on update cascade
   );
   
   /*
@@ -135,7 +134,7 @@ create table sportklasse(
   name varchar(30) not null primary key,
   sport_gehalten_von integer references sportlehrperson(pers_no) on update cascade on delete set null
   foreign key (schul_nr, pers_no)
-  references sportlehrperson(schul_nr, pers_no)
+  references sportlehrperson(schul_nr, pers_no) on delete set null on update cascade
   );
   /*
 Die Tabelle klasse enthält die Attribute name und sport_gehalten_von.
