@@ -7,14 +7,14 @@ wird die männliche Form genutzt. Diese Begriffe gelten für alle Geschlechter.
 Die Tabellen sind:
 
 1. schule
-2. schueler
-3. sportliche_leistung
-4. sportlehrperson
-5. erfolgt_um (hier werden die Zeiten gespeichert, wann die Sportliche Leistung stattgefunden haben)
-6. sportklasse
-7. erbringt (hier werden die Beziehungen zwischen den Tabellen schueler und sportliche_leistung gespeichert)
+2. sportlehrperson
+3. sportklasse
+4. schueler
+5. erfolgt_um
+6. sportliche_leistung
+7. erbringt
 
-Die Rückmeldungen des ersten Milestonegit  haben wir berücksichtigt und die Entitäten bzw. Attribute 
+Die Rückmeldungen des ersten Milestone  haben wir berücksichtigt und die Entitäten bzw. Attribute 
 foglendermassen angepasst:
 Damit zwischen Schule, Sportlehrperson und Klasse keine Connection Trap ensteht, haben wir der Klasse 
 ein zusätzliches Attribut "sport_gehalten_von" hinzugefügt, welches auf die Tabelle sportlehrperson verweist. 
@@ -26,6 +26,7 @@ Zudem haben wir die Beziehung erfolgt mit einer N:1 Beziehung ersetzt, damit nic
 für eine Sportliche Leistung angegeben werden können.
 
 Zu jeder Tabelle wird unterhalb der sql Anweisung ein kurzer Kommentar gegeben. 
+Die Tabellen müssen bei der Erschaffung in der angegebenen Reihenfolge erstellt werden.
 */
 
 create table schule(
@@ -60,6 +61,48 @@ Hier hätte man auch eine Tabelle mit allen Kantonen erstellen können, und mit 
 Wir haben uns aber für diese Lösung entschieden, da wir nur die Kantone benötigen, 
 und nicht die ganzen Daten der Kantone.
 */
+create table sportlehrperson(
+  pers_no integer not null unique primary key, 
+  nachname varchar(30) not null, 
+  vorname varchar(30) not null,
+  schul_nr integer not null ,
+  foreign key (schul_nr)
+  references schule(schul_nr)on delete set null on update cascade
+  );
+  
+  /*
+Die Tabelle sportlehrperson enthält die Attribute pers_no, nachname, vorname und schul_nr.
+Die pers_no ist der Primärschlüssel und wird automatisch hochgezählt.
+Die Attribute nachname, vorname und schul_nr sind nicht null und müssen angegeben werden.
+Das Attribut schul_nr ist ein Fremdschlüssel, welcher auf die Tabelle schule verweist.
+schul_nr soll auf null gesetzt werden, falls die Schule gelöscht wird, da wir erwarten, dass die Lehrperson immer 
+in einer Schule arbeitet. Falls die Lehrperson in eine andere Schule wechselt, 
+soll der Wert von schul_nr geändert werden.
+  */
+
+
+create table sportklasse(
+  name varchar(30) not null ,
+  sport_gehalten_von integer references sportlehrperson(pers_no) on update cascade on delete set null,
+  schul_nr integer not null references schule(schul_nr) on delete set null,
+  primary key (name, schul_nr) 
+  );
+  /*
+Die Tabelle klasse (schwache Entität) enthält die Attribute name und sport_gehalten_von.
+Das Attribut name und schul_nr bilden den Primärschlüssel und müssen angegeben werden.
+Hier nehmen wir an, dass jede Klasse ihren eigenen Namen hat. 
+Ob die Klassen in der ganzen Schweiz eindeutig sind, ist uns nicht bekannt, 
+wir nehmen an, dass der Primärschlüssel aus name und schul_nr eindeutig ist.
+Die Sportklassen entsprechen auch nicht den normalen Klassen, d.h. es kann durchaus sein, dass
+die Sportklassen aus verschiedenen Klassen der Schule zusammengefasst werden.
+Das sport_gehalten_von Attribut bezieht sich auf die Sportlehrperson, welche die Klasse betreut.
+sport_gehalten_von soll auf null gesetzt werden, falls die Lehrperson gelöscht wird, da wir erwarten, dass die Klasse immer
+von einer Lehrperson betreut wird und wir hier somit allenfalls eine andere Lehrperson zuweisen können.
+Falls die Lehrperson in eine andere Klasse wechselt, soll der Wert von sport_gehalten_von geändert werden(on update cascade).
+Das schul_nr Attribut bezieht sich auf die Schule, in welcher die Klasse sich befindet.
+schul_nr soll auf null gesetzt werden, falls die Schule gelöscht wird, da wir erwarten, dass die Klasse immer
+in einer Schule ist und wir hier somit allenfalls eine andere Schule zuweisen können.
+  */
 
 create table schueler(
   schueler_nr integer not null unique primary key, 
@@ -86,6 +129,25 @@ Bei einem Update der Tabelle sportklasse wird der Fremdschlüssel aktualisiert.
 Bei einem Delete des Fremdschlüssels wird der Wert auf null gesetzt, somit können wir hier darauf reagieren, wenn 
 z. B. ein Schüler noch nicht in eine Klasse eingeteilt wurde.
 */ 
+
+
+create table erfolgt_um(
+  log_no integer not null unique primary key, 
+  datum date not null default '2023-01-01'
+  check (datum > '2023-01-01'), 
+  uhrzeit time not null default '12:00:00'
+  check (uhrzeit > '00:00:00' and uhrzeit < '23:59:59')
+  );
+  /*
+Die Tabelle erfolgt_um enthält die Attribute log_no, datum und uhrzeit.
+Das Attribut log_no ist der Primärschlüssel und wird automatisch hochgezählt.
+Die Attribute datum und uhrzeit sind nicht null und müssen angegeben werden.
+Bei datum wird geprüft, ob der eingegebene Wert nach dem 01.01.2023 liegt. Wir nehmen an, dass die Datenbank erst
+ab dem 01.01.2023 verwendet wird.
+Falls datum und uhrzeit nicht angegeben werden, werden diese auf 01.01.2023 und 12:00:00 gesetzt.
+Bei uhrzeit wird geprüft, ob der eingegebene Wert zwischen 00:00:00 und 23:59:59 liegt.
+
+  */
   
 create table sportliche_leistung(
   count_no integer not null unique primary key, 
@@ -109,69 +171,7 @@ Das Attribut zeit_log_no ist ein Fremdschlüssel, welcher auf die Tabelle zeit v
 zeit_log_no soll gelöscht werden, falls die Zeit gelöscht wird, da wir annehmen, dass die Zeit nur einmal
 für eine sportliche Leistung verwendet wird.
   */
-create table sportlehrperson(
-  pers_no integer not null unique primary key, 
-  nachname varchar(30) not null, 
-  vorname varchar(30) not null,
-  schul_nr integer not null ,
-  foreign key (schul_nr)
-  references schule(schul_nr)on delete set null on update cascade
-  );
-  
-  /*
-Die Tabelle sportlehrperson enthält die Attribute pers_no, nachname, vorname und schul_nr.
-Die pers_no ist der Primärschlüssel und wird automatisch hochgezählt.
-Die Attribute nachname, vorname und schul_nr sind nicht null und müssen angegeben werden.
-Das Attribut schul_nr ist ein Fremdschlüssel, welcher auf die Tabelle schule verweist.
-schul_nr soll auf null gesetzt werden, falls die Schule gelöscht wird, da wir erwarten, dass die Lehrperson immer 
-in einer Schule arbeitet. Falls die Lehrperson in eine andere Schule wechselt, 
-soll der Wert von schul_nr geändert werden.
-  */
-create table erfolgt_um(
-  log_no integer not null unique primary key, 
-  datum date not null default '2023-01-01'
-  check (datum > '2023-01-01'), 
-  uhrzeit time not null default '12:00:00'
-  check (uhrzeit > '00:00:00' and uhrzeit < '23:59:59')
-  );
-  /*
-Die Tabelle erfolgt_um enthält die Attribute log_no, datum und uhrzeit.
-Das Attribut log_no ist der Primärschlüssel und wird automatisch hochgezählt.
-Die Attribute datum und uhrzeit sind nicht null und müssen angegeben werden.
-Bei datum wird geprüft, ob der eingegebene Wert nach dem 01.01.2023 liegt. Wir nehmen an, dass die Datenbank erst
-ab dem 01.01.2023 verwendet wird.
-Falls datum und uhrzeit nicht angegeben werden, werden diese auf 01.01.2023 und 12:00:00 gesetzt.
-Bei uhrzeit wird geprüft, ob der eingegebene Wert zwischen 00:00:00 und 23:59:59 liegt.
 
-  */
-  
-create table sportklasse(
-  name varchar(30) not null ,
-  sport_gehalten_von integer references sportlehrperson(pers_no) on update cascade on delete set null,
-  schul_nr integer not null references schule(schul_nr) on delete set null,
-  primary key (name, schul_nr) 
-  );
-  /*
-Die Tabelle klasse (schwache Entität) enthält die Attribute name und sport_gehalten_von.
-Das Attribut name und schul_nr bilden den Primärschlüssel und müssen angegeben werden.
-Hier nehmen wir an, dass jede Klasse ihren eigenen Namen hat. 
-Ob die Klassen in der ganzen Schweiz eindeutig sind, ist uns nicht bekannt, 
-wir nehmen an, dass der Primärschlüssel aus name und schul_nr eindeutig ist.
-Die Sportklassen entsprechen auch nicht den normalen Klassen, d.h. es kann durchaus sein, dass
-die Sportklassen aus verschiedenen Klassen der Schule zusammengefasst werden.
-Das sport_gehalten_von Attribut bezieht sich auf die Sportlehrperson, welche die Klasse betreut.
-sport_gehalten_von soll auf null gesetzt werden, falls die Lehrperson gelöscht wird, da wir erwarten, dass die Klasse immer
-von einer Lehrperson betreut wird und wir hier somit allenfalls eine andere Lehrperson zuweisen können.
-Falls die Lehrperson in eine andere Klasse wechselt, soll der Wert von sport_gehalten_von geändert werden(on update cascade).
-Das schul_nr Attribut bezieht sich auf die Schule, in welcher die Klasse sich befindet.
-schul_nr soll auf null gesetzt werden, falls die Schule gelöscht wird, da wir erwarten, dass die Klasse immer
-in einer Schule ist und wir hier somit allenfalls eine andere Schule zuweisen können.
-  */
-
-
-
-
-  
 create table erbringt(
   schueler_nr integer references schueler(schueler_nr) on delete set null,
   count_no integer references sportliche_leistung(count_no) on delete set null,
