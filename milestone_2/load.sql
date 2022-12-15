@@ -11,16 +11,16 @@ insert into schule values
 
 -- Einfügen der Daten in die Tabelle schueler
 insert into schueler values 
-(1, 'Muster', 'Max', 2001, 'm', '26a'),
-(2, 'Hofer', 'Erika', 2002, 'w', '26a'),
-(3, 'Bieler', 'Hans', 2003, 'm', '27a'),
-(4, 'Lustiger', 'Peter', 2004, 'm', '24a'),
-(5, 'Höfer', 'Anna', 2005, 'w', '25a'),
-(6, 'Walther', 'Fritz', 2006, 'm', '23a'),
-(7, 'Gruber', 'Matthias', 2007, 'm', '25a'),
-(8, 'Berger', 'Wilma', 2008, 'w', '26a'),
-(9, 'Streit', 'Hans', 2009, 'm', '24a'),
-(10, 'Bockig', 'Peter', 2010, 'm', '27a');
+(1, 'Muster', 'Max', 2001, 'm', '26a',2),
+(2, 'Hofer', 'Erika', 2002, 'w', '26a',2),
+(3, 'Bieler', 'Hans', 2003, 'm', '27a',3),
+(4, 'Lustiger', 'Peter', 2004, 'm', '24a',4),
+(5, 'Höfer', 'Anna', 2005, 'w', '25a',1),
+(6, 'Walther', 'Fritz', 2006, 'm', '23a',2),
+(7, 'Gruber', 'Matthias', 2007, 'm', '25a',1),
+(8, 'Berger', 'Wilma', 2008, 'w', '26a',2),
+(9, 'Streit', 'Hans', 2009, 'm', '24a',4),
+(10, 'Bockig', 'Peter', 2010, 'm', '27a',3);
 
 -- Einfügen der Daten in die Tabelle sportliche_leistung
 insert into sportliche_leistung values 
@@ -57,11 +57,11 @@ insert into erfolgt_um values
 
 -- Einfügen der Daten in der Tabelle sportklasse 
 insert into sportklasse values 
-('26a',1,2,1),
-('27a',2,3,2),
-('24a',3,4,3),
-('25a',4,1,4),
-('23a',1,2,1);
+('26a',1,2),
+('27a',2,3),
+('24a',3,4),
+('25a',4,1),
+('23a',1,2);
 
 -- Einfügen der Daten in der Tabelle erbringt
 insert into erbringt values 

@@ -29,7 +29,7 @@ Zu jeder Tabelle wird unterhalb der sql Anweisung ein kurzer Kommentar gegeben.
 */
 
 create table schule(
-  schul_nr integer not null unique primary key,
+  schul_nr integer not null  unique primary key,
   schulname varchar(40) not null, 
   kanton varchar(2) not null
   check (kanton = 'AG' or kanton = 'AI' or 
@@ -44,11 +44,16 @@ create table schule(
           kanton = 'SZ' or kanton = 'TG' or 
           kanton = 'TI' or kanton = 'UR' or 
           kanton = 'VD' or kanton = 'VS' or 
-          kanton = 'ZG' or kanton = 'ZH'),
+          kanton = 'ZG' or kanton = 'ZH')
   ); 
 /*
 Die Tabelle schule enthält die Attribute schul_nr, schulname und kanton.
 Das Attribut schul_nr ist der Primärschlüssel und wird automatisch hochgezählt.
+Dies würde mit dem Zusatz "auto_increment" passieren, wird aber hier nicht unterstützt, bzw. als Fehler angezeigt.
+Daher werden auch alle weiteren Primärschlüssel für die anderen Tabellen nicht automatisch hochgezählt.
+Falls der Zusatz "auto_increment" unterstützt wird, kann beim Einfügen von Daten auf die Primärschlüssel verzichtet werden.
+Wir nehmen für die diese und die weiteren Tabllen an, dass die Primärschlüssel automatisch hochgezählt werden, werden aber 
+beim Einfügen der Daten die Primärschlüssel angeben.
 Die Attribute schulname und kanton sind nicht null und müssen angegeben werden.
 Bei kanton wird geprüft, ob der eingegebene Wert in der Liste der Kantone enthalten ist.
 Hier hätte man auch eine Tabelle mit allen Kantonen erstellen können, und mit einem foreign key verknüpfen können.
@@ -61,11 +66,12 @@ create table schueler(
   nachname varchar(30) not null, 
   vorname varchar(30) not null, 
   geburtsjahr year not null
-  check (Geburtsjahr > 2000 and Geburtsjahr < 2010),
+  check (geburtsjahr > 2000 and geburtsjahr < 2010),
   geschlecht varchar(1) not null
   check (geschlecht = 'm' or geschlecht = 'w' or geschlecht = 'd'),
   klassen_name varchar(30) not null,
-  foreign key (klassen_name) references klasse(name) on update cascade on delete set null,
+  schul_nr integer not null,
+  foreign key (klassen_name,schul_nr) references sportklasse(name,schul_nr) on update cascade on delete set null
   );
   /*
 Die Tabelle schueler enthält die Attribute schueler_nr, nachname, vorname, Geburtsjahr, geschlecht und klassen_name.
@@ -74,10 +80,11 @@ Die Attribute nachname, vorname, Geburtsjahr, geschlecht und klassen_name sind n
 Bei geburtsjahr wird geprüft, ob der eingegebene Wert zwischen 2000 und 2010 liegt. Hier nehmen wir an, 
 dass die Schüler zwischen 12 und 22 Jahre alt sind. Dies könnte man natürlich auch noch anpassen.
 Bei geschlecht wird geprüft ob der eingegebene Wert m, w oder d ist. d steht für divers.
-Das Attribut klassen_name ist ein Fremdschlüssel, welcher auf die Tabelle klasse verweist.
-klassen_name soll nur ein update erhalten, falls der Schüler in eine andere Klasse wechselt.
-klassen_name soll auf null gesetzt werden, falls die Klasse gelöscht wird (normalereweise 
-würde der Schüler dann in eine andere Klasse wechseln, dh. der Schüler sollte eigentlich immer in einer Klasse sein).
+Die Attribute klassen_name und schul_nr sind nicht null und müssen angegeben werden.
+Der Fremdschlüssel klassen_name und schul_nr verweist auf die Tabelle sportklasse.
+Bei einem Update der Tabelle sportklasse wird der Fremdschlüssel aktualisiert.
+Bei einem Delete des Fremdschlüssels wird der Wert auf null gesetzt, somit können wir hier darauf reagieren, wenn 
+ein Schüler noch nicht in eine Klasse eingeteilt wurde.
 */ 
   
 create table sportliche_leistung(
@@ -89,7 +96,7 @@ create table sportliche_leistung(
   check (co2_aquivalenz >=0) default 0,
   zeit_log_no integer ,
   foreign key (zeit_log_no)
-  references zeit(log_no) on delete cascade
+  references erfolgt_um(log_no) on delete cascade
   );
   
   /*
@@ -139,31 +146,28 @@ Bei uhrzeit wird geprüft, ob der eingegebene Wert zwischen 00:00:00 und 23:59:5
   */
   
 create table sportklasse(
-  name varchar(30) not null primary key,
+  name varchar(30) not null ,
   sport_gehalten_von integer references sportlehrperson(pers_no) on update cascade on delete set null,
-  schul_nr integer not null references schule(schul_nr),
-  pers_no integer not null references sportlehrperson(pers_no),
-  foreign key (schul_nr, pers_no)
-  references sportlehrperson(schul_nr, pers_no) on delete set null on update cascade
+  schul_nr integer not null references schule(schul_nr) on delete set null,
+  primary key (name, schul_nr) 
   );
   /*
-Die Tabelle klasse enthält die Attribute name und sport_gehalten_von.
-Das Attribut name ist der Primärschlüssel und wird automatisch hochgezählt.
+Die Tabelle klasse (schwache Entität) enthält die Attribute name und sport_gehalten_von.
+Das Attribut name und schul_nr bilden den Primärschlüssel und müssen angegeben werden.
 Hier nehmen wir an, dass jede Klasse ihren eigenen Namen hat. 
 Ob die Klassen in der ganzen Schweiz eindeutig sind, ist uns nicht bekannt, 
-wir nehmen an, dass dies der Fall ist. Sonst würden wir hier einen Sorogatschlüssel verwenden.
+wir nehmen an, dass der Primärschlüssel aus name und schul_nr eindeutig ist.
 Die Sportklassen entsprechen auch nicht den normalen Klassen, d.h. es kann durchaus sein, dass
 die Sportklassen aus verschiedenen Klassen der Schule zusammengefasst werden.
 Das sport_gehalten_von Attribut bezieht sich auf die Sportlehrperson, welche die Klasse betreut.
 sport_gehalten_von soll auf null gesetzt werden, falls die Lehrperson gelöscht wird, da wir erwarten, dass die Klasse immer
-von einer Lehrperson betreut wird. Falls die Lehrperson in eine andere Klasse wechselt,
-soll der Wert von sport_gehalten_von geändert werden.
-Der Fremdschlüssel ist ein composite key, welcher aus schul_nr und pers_no besteht.
-Es kann sein, dass der Syntax nicht korrekt ist, da wir uns nicht sicher sind,
-ob bei einem composite key die beiden Attribute so geschrieben werden müssen.
-Ev. könnte man hier das Attribut sport_gehalten_von verwenden, da es ja den gleichen Wert hat.
-Wir haben es leider nicht herausgefunden, es ist aber sicher eine redundante Information.
+von einer Lehrperson betreut wird und wir hier somit allenfalls eine andere Lehrperson zuweisen können.
+Falls die Lehrperson in eine andere Klasse wechselt, soll der Wert von sport_gehalten_von geändert werden(on update cascade).
+Das schul_nr Attribut bezieht sich auf die Schule, in welcher die Klasse sich befindet.
+schul_nr soll auf null gesetzt werden, falls die Schule gelöscht wird, da wir erwarten, dass die Klasse immer
+in einer Schule ist und wir hier somit allenfalls eine andere Schule zuweisen können.
   */
+
 
 
 
