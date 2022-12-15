@@ -84,7 +84,7 @@ Die Attribute klassen_name und schul_nr sind nicht null und müssen angegeben we
 Der Fremdschlüssel klassen_name und schul_nr verweist auf die Tabelle sportklasse.
 Bei einem Update der Tabelle sportklasse wird der Fremdschlüssel aktualisiert.
 Bei einem Delete des Fremdschlüssels wird der Wert auf null gesetzt, somit können wir hier darauf reagieren, wenn 
-ein Schüler noch nicht in eine Klasse eingeteilt wurde.
+z. B. ein Schüler noch nicht in eine Klasse eingeteilt wurde.
 */ 
   
 create table sportliche_leistung(
