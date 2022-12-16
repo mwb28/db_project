@@ -133,19 +133,19 @@ create table erfolgt_um(
   );
   /*
 Die Tabelle erfolgt_um enthält die Attribute log_no, datum und uhrzeit.
-Wir haben die Entität zeit umbenannt auf erfolgt_um.
+Wir haben die Entität zeit auf erfolgt_um umbenannt.
 Das Attribut log_no ist der Primärschlüssel und wird automatisch hochgezählt.
 Dies würde mit dem Zusatz "auto_increment" passieren, wird aber beim Testen als Fehler angezeigt.
 Auch bei der Tabelle sportliche_leistung sollte der Zusatz "auto_increment" stehen.
 Falls der Zusatz "auto_increment" von der Datenbank unterstützt wird, kann beim Einfügen von Daten auf 
-die Primärschlüssel verzichtet werden. Wir nehmen für diese und die sportliche_leistung Tabellen an, 
-dass die Primärschlüssel automatisch hochgezählt werden, werden aber beim Einfügen der Daten 
-die Primärschlüssel angeben.
+die Primärschlüssel verzichtet werden. Wir nehmen für diese und die sportliche_leistung-Tabellen an, 
+dass die Primärschlüssel automatisch hochgezählt werden, aber beim Einfügen der Daten 
+die Primärschlüssel angegeben werden.
 Die Attribute datum und uhrzeit sind nicht null und müssen angegeben werden.
-Bei datum wird geprüft, ob der eingegebene Wert nach dem 01.01.2023 liegt. Wir nehmen an, dass die 
+Bei datum wird geprüft, ob der eingegebene Wert nach dem 01.01.2023 liegt. Wir gehen davon aus, dass die 
 Datenbank erst ab dem 01.01.2023 verwendet wird. Hier könnte man auch noch eine obere Grenze setzen,
-v.a. dann wenn der Wettkampf nur über eine bestimmte Zeit laufen wird.
-Falls datum und uhrzeit nicht angegeben werden, werden diese auf 01.01.2023 und 12:00:00 gesetzt.
+v.a. dann, wenn der Wettkampf nur über eine bestimmte Zeit laufen soll.
+Falls datum und uhrzeit nicht angegeben werden, werden diese per default auf 01.01.2023 und 12:00:00 gesetzt.
 Bei uhrzeit wird geprüft, ob der eingegebene Wert zwischen 00:00:00 und 23:59:59 liegt.
 */
   
@@ -156,7 +156,7 @@ create table sportliche_leistung(
   sportart varchar(30) not null, 
   co2_aquivalenz integer
   check (co2_aquivalenz >=0) default 0,
-  zeit_log_no integer ,
+  zeit_log_no integer,
   foreign key (zeit_log_no)
   references erfolgt_um(log_no) on delete cascade
   );
@@ -167,7 +167,7 @@ Die count_no ist der Primärschlüssel und wird automatisch hochgezählt.
 Die Attribute km und sportart sind nicht null und müssen angegeben werden. 
 Die co2_aquivalenz muss nicht angegeben werden, da sie ev. nicht immer bekannt ist. Diese wird dann auf 0 gesetzt.
 Wenn die co2_aquivalenz angegeben wird, wird geprüft, ob der eingegebene Wert grösser oder gleich 0 ist.
-Das Attribut zeit_log_no ist ein Fremdschlüssel, welcher auf die Tabelle zeit verweist.
+Das Attribut zeit_log_no ist ein Fremdschlüssel, welcher auf die Tabelle erfolgt_um verweist.
 zeit_log_no soll gelöscht werden, falls die Zeit gelöscht wird, da wir annehmen, dass die Zeit nur einmal
 für eine sportliche Leistung verwendet wird.
   */
@@ -181,7 +181,8 @@ create table erbringt(
 Die Tabelle erbringt enthält die Attribute schueler_nr und count_no.
 Die schueler_nr und count_no sind die Primärschlüssel.
 Das Attribut schueler_nr wird auf die Tabelle schueler verweisen und soll auf null gesetzt werden, falls der Schüler gelöscht wird.
-Das Attribut count_no wird auf die Tabelle sportliche_leistung verweisen und soll auf null gesetzt werden, falls die sportliche Leistung gelöscht wird.
-Es macht keinen Sinn, dass ein Schüler eine sportliche Leistung erbringt, die nicht existiert (oder umgekehrt).
+Das Attribut count_no wird auf die Tabelle sportliche_leistung verweisen und soll auf null gesetzt werden, 
+falls die sportliche Leistung gelöscht wird.
+Es ergibt keinen Sinn, dass ein Schüler eine sportliche Leistung erbringt, die nicht existiert (oder umgekehrt).
   */
 
