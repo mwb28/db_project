@@ -73,11 +73,11 @@ Die Attribute nachname und vorname sind nicht null und müssen angegeben werden.
 
 
 create table sportklasse(
-  name varchar(30) not null ,
+  name varchar(30) not null,
   schul_nr integer not null references schule(schul_nr) on delete set null,
   pers_no integer not null,
-  foreign key pers_no references sporlehrperson(pers_no) on delete set null on update casacade
-  primary key (name, schul_nr) 
+  primary key (name, schul_nr),
+  foreign key (pers_no) references sporlehrperson(pers_no) on delete set null on update cascade
   );
   /*
 Die Tabelle sportklasse (schwache Entität) enthält die Attribute name, schul_nr und pers_no.
