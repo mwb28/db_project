@@ -26,7 +26,7 @@ Zudem haben wir die Beziehung erfolgt mit einer N:1 Beziehung ersetzt, damit nic
 für eine Sportliche Leistung angegeben werden können.
 
 Zu jeder Tabelle wird unterhalb der sql Anweisung ein kurzer Kommentar gegeben. 
-Die Tabellen müssen bei der Erschaffung in der angegebenen Reihenfolge erstellt werden.
+Die Tabellen sollen bei der Erschaffung in der angegebenen Reihenfolge erstellt werden.
 */
 
 create table schule(
@@ -49,12 +49,7 @@ create table schule(
   ); 
 /*
 Die Tabelle schule enthält die Attribute schul_nr, schulname und kanton.
-Das Attribut schul_nr ist der Primärschlüssel und wird automatisch hochgezählt.
-Dies würde mit dem Zusatz "auto_increment" passieren, wird aber hier nicht unterstützt, bzw. als Fehler angezeigt.
-Daher werden auch alle weiteren Primärschlüssel für die anderen Tabellen nicht automatisch hochgezählt.
-Falls der Zusatz "auto_increment" unterstützt wird, kann beim Einfügen von Daten auf die Primärschlüssel verzichtet werden.
-Wir nehmen für die diese und die weiteren Tabllen an, dass die Primärschlüssel automatisch hochgezählt werden, werden aber 
-beim Einfügen der Daten die Primärschlüssel angeben.
+Das Attribut schul_nr ist der Primärschlüssel.
 Die Attribute schulname und kanton sind nicht null und müssen angegeben werden.
 Bei kanton wird geprüft, ob der eingegebene Wert in der Liste der Kantone enthalten ist.
 Hier hätte man auch eine Tabelle mit allen Kantonen erstellen können, und mit einem foreign key verknüpfen können.
@@ -72,7 +67,7 @@ create table sportlehrperson(
   
   /*
 Die Tabelle sportlehrperson enthält die Attribute pers_no, nachname, vorname und schul_nr.
-Die pers_no ist der Primärschlüssel und wird automatisch hochgezählt.
+Die pers_no ist der Primärschlüssel.
 Die Attribute nachname, vorname und schul_nr sind nicht null und müssen angegeben werden.
 Das Attribut schul_nr ist ein Fremdschlüssel, welcher auf die Tabelle schule verweist.
 schul_nr soll auf null gesetzt werden, falls die Schule gelöscht wird, da wir erwarten, dass die Lehrperson immer 
@@ -118,7 +113,7 @@ create table schueler(
   );
   /*
 Die Tabelle schueler enthält die Attribute schueler_nr, nachname, vorname, Geburtsjahr, geschlecht und klassen_name.
-Die schueler_nr ist der Primärschlüssel und wird automatisch hochgezählt.
+Die schueler_nr ist der Primärschlüssel.
 Die Attribute nachname, vorname, Geburtsjahr, geschlecht und klassen_name sind nicht null und müssen angegeben werden.
 Bei geburtsjahr wird geprüft, ob der eingegebene Wert zwischen 2000 und 2010 liegt. Hier nehmen wir an, 
 dass die Schüler zwischen 12 und 22 Jahre alt sind. Dies könnte man natürlich auch noch anpassen.
@@ -141,13 +136,19 @@ create table erfolgt_um(
   /*
 Die Tabelle erfolgt_um enthält die Attribute log_no, datum und uhrzeit.
 Das Attribut log_no ist der Primärschlüssel und wird automatisch hochgezählt.
+Dies würde mit dem Zusatz "auto_increment" passieren, wird aber beim Testen als Fehler angezeigt.
+Auch bei der Tabelle sportliche_leistung sollte der Zusatz "auto_increment" stehen.
+Falls der Zusatz "auto_increment" von der Datenbank unterstützt wird, kann beim Einfügen von Daten auf 
+die Primärschlüssel verzichtet werden. Wir nehmen für diese und die sportliche_leistung Tabellen an, 
+dass die Primärschlüssel automatisch hochgezählt werden, werden aber beim Einfügen der Daten 
+die Primärschlüssel angeben.
 Die Attribute datum und uhrzeit sind nicht null und müssen angegeben werden.
-Bei datum wird geprüft, ob der eingegebene Wert nach dem 01.01.2023 liegt. Wir nehmen an, dass die Datenbank erst
-ab dem 01.01.2023 verwendet wird.
+Bei datum wird geprüft, ob der eingegebene Wert nach dem 01.01.2023 liegt. Wir nehmen an, dass die 
+Datenbank erst ab dem 01.01.2023 verwendet wird. Hier könnte man auch noch eine obere Grenze setzen,
+v.a. dann wenn der Wettkampf nur über eine bestimmte Zeit laufen wird.
 Falls datum und uhrzeit nicht angegeben werden, werden diese auf 01.01.2023 und 12:00:00 gesetzt.
 Bei uhrzeit wird geprüft, ob der eingegebene Wert zwischen 00:00:00 und 23:59:59 liegt.
-
-  */
+*/
   
 create table sportliche_leistung(
   count_no integer not null unique primary key, 
@@ -179,7 +180,7 @@ create table erbringt(
   );
   /*
 Die Tabelle erbringt enthält die Attribute schueler_nr und count_no.
-Die schueler_nr und count_no sind die Primärschlüssel und werden automatisch hochgezählt.
+Die schueler_nr und count_no sind die Primärschlüssel.
 Das Attribut schueler_nr wird auf die Tabelle schueler verweisen und soll auf null gesetzt werden, falls der Schüler gelöscht wird.
 Das Attribut count_no wird auf die Tabelle sportliche_leistung verweisen und soll auf null gesetzt werden, falls die sportliche Leistung gelöscht wird.
 Es macht keinen Sinn, dass ein Schüler eine sportliche Leistung erbringt, die nicht existiert (oder umgekehrt).
