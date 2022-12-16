@@ -7,13 +7,13 @@ insert into schule values
 (101, 'Kantonsschule Aarau', 'AR'),
 (102,'Gymnasium Burgdorf', 'BE'),
 (103,'Kantonsschule Baden', 'AG'),
-(104,'Kantonsschule Luzern', 'LU');
+(104,'Kantonsschule Sursee', 'LU');
 
 -- Einfügen der Daten in der Tabelle sporlehrperson
 insert into sportlehrperson values 
 (201, 'Walther', 'Matthias',102),
-(202, 'Ineichen','Calissa',103),
-(203, 'Brunner','Peter',104),
+(202, 'Ineichen','Calissa',104),
+(203, 'Brunner','Peter',103),
 (204, 'Holzer', 'Hans',101);
 
 -- Einfügen der Daten in der Tabelle sportklasse 
