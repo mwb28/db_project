@@ -77,7 +77,7 @@ create table sportklasse(
   schul_nr integer not null references schule(schul_nr) on delete set null,
   pers_no integer not null,
   primary key (name, schul_nr),
-  foreign key (pers_no) references sporlehrperson(pers_no) on delete set null on update cascade
+  foreign key (pers_no) references sportlehrperson(pers_no) on delete set null on update cascade
   );
   /*
 Die Tabelle sportklasse (schwache Entität) enthält die Attribute name, schul_nr und pers_no.
