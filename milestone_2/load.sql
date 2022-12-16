@@ -19,8 +19,8 @@ insert into sportlehrperson values
 -- Einfügen der Daten in der Tabelle sportklasse 
 insert into sportklasse values 
 ('26a',201,102),
-('27a',202,103),
-('24a',203,104),
+('27a',202,104),
+('24a',203,103),
 ('25a',204,101),
 ('23a',201,102);
 
