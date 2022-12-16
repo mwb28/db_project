@@ -1,6 +1,6 @@
 /*
 Alle Tabellen werden geöscht, falls sie bereits existieren.
-Die Tabellen werden in der Reihenfolge gelöscht, in der sie erstellt wurden.
+Die Tabellen werden in der umgekehrten Reihenfolge gelöscht, in der sie erstellt wurden.
 Die Tabelle erbringt wird am Ende nur noch Null Werte enthalten.
 */
 

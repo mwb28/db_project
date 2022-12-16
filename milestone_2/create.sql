@@ -8,22 +8,23 @@ Die Tabellen sind:
 
 1. schule
 2. sportlehrperson
-3. sportklasse
+3. sportklasse (im Relationsmodell klasse)
 4. schueler
-5. erfolgt_um
+5. erfolgt_um (im Relationsmodell zeit)
 6. sportliche_leistung
 7. erbringt
 
 Die Rückmeldungen des ersten Milestone  haben wir berücksichtigt und die Entitäten bzw. Attribute 
 foglendermassen angepasst:
 Damit zwischen Schule, Sportlehrperson und Klasse keine Connection Trap ensteht, haben wir der Klasse 
-ein zusätzliches Attribut "sport_gehalten_von" hinzugefügt, welches auf die Tabelle sportlehrperson verweist. 
+ein den Fremdschlüssel pers_no hinzugefügt, welches auf die Tabelle sportlehrperson verweist. 
 Hier könnte man natürlich auch eine zusätzlich Tabelle erstellen, welche alle 
-Fächer der Klasse aufliestet, da wir aber nur am Fach Sport interessiert sind, 
+Fächer der Klasse und Lehrpersonen aufliestet, da wir aber nur am Fach Sport interessiert sind, 
 haben wir uns für diese Lösung entschieden.
 Weiter haben wir die Beziehung zwischen Klasse und Sportliche Leistung entfernt, da diese nicht notwendig ist.
 Zudem haben wir die Beziehung erfolgt mit einer N:1 Beziehung ersetzt, damit nicht mehrere Zeiten 
-für eine Sportliche Leistung angegeben werden können.
+für eine Sportliche Leistung angegeben werden können. Es macht für den Wettkampf durchaus sinn, damit 
+wir ein tägliches Update erhalten, wie weit die Schüler bzw. Klassen bereits gekommen sind.
 
 Zu jeder Tabelle wird unterhalb der sql Anweisung ein kurzer Kommentar gegeben. 
 Die Tabellen sollen bei der Erschaffung in der angegebenen Reihenfolge erstellt werden.
@@ -59,10 +60,7 @@ und nicht die ganzen Daten der Kantone.
 create table sportlehrperson(
   pers_no integer not null unique primary key, 
   nachname varchar(30) not null, 
-  vorname varchar(30) not null,
-  schul_nr integer not null ,
-  foreign key (schul_nr)
-  references schule(schul_nr)on delete set null on update cascade
+  vorname varchar(30) not null
   );
   
   /*
@@ -78,22 +76,24 @@ soll der Wert von schul_nr geändert werden.
 
 create table sportklasse(
   name varchar(30) not null ,
-  sport_gehalten_von integer references sportlehrperson(pers_no) on update cascade on delete set null,
   schul_nr integer not null references schule(schul_nr) on delete set null,
+  pers_no integer not null,
+  foreign key pers_no references sporlehrperson(pers_no) on delete set null on casacade update
   primary key (name, schul_nr) 
   );
   /*
 Die Tabelle klasse (schwache Entität) enthält die Attribute name und sport_gehalten_von.
+Wir haben die Entität umbenannt von klasse auf sportklasse.
 Das Attribut name und schul_nr bilden den Primärschlüssel und müssen angegeben werden.
 Hier nehmen wir an, dass jede Klasse ihren eigenen Namen hat. 
 Ob die Klassen in der ganzen Schweiz eindeutig sind, ist uns nicht bekannt, 
 wir nehmen an, dass der Primärschlüssel aus name und schul_nr eindeutig ist.
 Die Sportklassen entsprechen auch nicht den normalen Klassen, d.h. es kann durchaus sein, dass
 die Sportklassen aus verschiedenen Klassen der Schule zusammengefasst werden.
-Das sport_gehalten_von Attribut bezieht sich auf die Sportlehrperson, welche die Klasse betreut.
-sport_gehalten_von soll auf null gesetzt werden, falls die Lehrperson gelöscht wird, da wir erwarten, dass die Klasse immer
+Das pers_no Attribut (Fremdschlüssel) bezieht sich auf die Sportlehrperson, welche die Klasse betreut.
+pers_no soll auf null gesetzt werden, falls die Lehrperson gelöscht wird, da wir erwarten, dass die Klasse immer
 von einer Lehrperson betreut wird und wir hier somit allenfalls eine andere Lehrperson zuweisen können.
-Falls die Lehrperson in eine andere Klasse wechselt, soll der Wert von sport_gehalten_von geändert werden(on update cascade).
+Falls die Lehrperson in eine andere Klasse wechselt, soll der Wert von pers_no geändert werden(on update cascade).
 Das schul_nr Attribut bezieht sich auf die Schule, in welcher die Klasse sich befindet.
 schul_nr soll auf null gesetzt werden, falls die Schule gelöscht wird, da wir erwarten, dass die Klasse immer
 in einer Schule ist und wir hier somit allenfalls eine andere Schule zuweisen können.
@@ -135,6 +135,7 @@ create table erfolgt_um(
   );
   /*
 Die Tabelle erfolgt_um enthält die Attribute log_no, datum und uhrzeit.
+Wir haben die Entität zeit umbenannt auf erfolgt_um.
 Das Attribut log_no ist der Primärschlüssel und wird automatisch hochgezählt.
 Dies würde mit dem Zusatz "auto_increment" passieren, wird aber beim Testen als Fehler angezeigt.
 Auch bei der Tabelle sportliche_leistung sollte der Zusatz "auto_increment" stehen.
